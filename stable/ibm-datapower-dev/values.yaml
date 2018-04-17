@@ -13,31 +13,34 @@ service:
   type: NodePort
 datapowerEnv:
   # Should agree with .Values.requests.cpu
-  workerThreads: 4
+  workerThreads: 2
 resources:
   limits:
-    cpu: 8
-    memory: 64Gi
+    cpu: 2
+    memory: 8Gi
   requests:
     # cpu should agree with .Values.datapowerEnv.workerThreads
-    cpu: 4
-    memory: 8Gi
+    cpu: 2
+    memory: 4Gi
 
 # Patterns requires you to specify .Values.fronstsideKey
 # and .Values.frontsideCert
 crypto:
-  frontsideKey:
-  frontsideCert:
+  frontsideKey: MIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQClrdpM2B1tRRF6914r7HVPUvNqirPirsY0oTUWxLg17SlpKApq/8QwjeA5lXFYQj3Jbr8tePrwT94oDHIibcvCljGTOyPxIGOAcAILPAKhaCv56jvU6zf6CC3WXGLn7MF1vIhLYft95BAFZg3heUIE2S2sDqb6Ciz/scbhU8mdGCyglSZ0E6zfoSyhQpGcCSOK/Spy1daJHt4rx1+Z+KzmRcnpzVzY+rfHu/vf7Vu/pQBXLB8cfFXFIVKGOhjZl7OE9T2ZNKja5um0n6gtkTNcTvSrDR37wuZSxsr+L8edSl3O8s2LE5Spytnmmr0jXydCvk5a3mw3kSzghjWm3hzhAgMBAAECggEAXZw2PLbbIZMlxkmgHscynQgsWqVV8B16BeCT43Jw9p8yh6TFBiHPEvQGneKPMSP0TyzQvfueJUurJQurLULGHwLHrf17WFFJhxdCQGC+x73ZIxKyjaH9dbtLUtPOWmZOBJzqkVUiSMYkOzinXR8rKxwejxmURLCdLjefPE8gGi7WxOM7Kb2SkE2mItgIpNeXocsWE6uezgE7mbHuYS14hDGDG9mlyBOjln4Q8pAwWtISV5tzeO/x2ZO1ZDEYedh4S3PrbbS7qdQTuHRSk14mTzj/ZLUaDH8k/UJunXGAF5xZgapsibMkwm4adPOG+9aj1sOuPiKw950BinTsE26qcQKBgQDPWRsqrgb7EgMZp6oJtGDLawtgYnIMqbUlMHefzdZYuqmpQDKlh1KI+3nBOZB+q4g2CNmhKt/0YL6j7TdPkwis+8Bhirjp6zEeggnMPdyR0JcUJiTScLuJPw2nZhH3QszDr1JPXe8/zixHwf2W7MACvj0DUzjz1GmRPtk6WMItJQKBgQDMjcswacip4ZUKw+eHL8/p8RDk4FKD7nFSwJPhmMSQJ3m0A6zU/l37hsYEoyIZcnqSHYAiZH1XHXS9hIlha+KS/4JBzh4ZlRGrnPE/nES5dP3REAgAiM0guCowgKh88sAhPaqj9vTDb3OlTo7k4pq/dc2o2OshRm3nQU/oj2bqDQKBgQCNmbinyPkTdRWQ66N/xSNlR9EZHaHta+g9YYAQLi33omJDJ4hu6p8+1R4tCvbWyqXW4Oxe2DzhU0BeCp3/RdZi6/pRor7tYKTGxN+UD5sWKXFDXVlALaSk8d6NN3OFfKUB7jUz5l6BIHe0+ZIJA92NAgYAw1Ddk24Utur6oarZ0QKBgQCFzkMZ+jivF8cc8aVkQxxoVa7NaQfREYrDrQGPUxVRjuEHplfKRFJKFJE3u1a0+rO/HNkSplVvRO92gVo0hhQCQG1+ikwaQ+75KYKOL7Ss9CCMP0ZcwyAbxRyj+aU9hrWziNk0xHi71w35FnhWtPyxPWg4iRzV+XIvEgQphpS1iQKBgQCHWB69uUITxI0qfLTYmlIP/rC7uy+JxL6A5m4FfzguRvStzqNQATrAPIPMpOtkoxDxWa1+MVf1IsaL5g71awNaLd2lQAIYeFPY7dy0f+oZkOnpHmBZNGmGVyZjfDfg1UP7WJtq0e92cArUKGfWZ8sakdE5KhqfcqOldcLWDsVDrw==
+  frontsideCert: MIIDXTCCAkWgAwIBAgIJAIyIeAZPW4JLMA0GCSqGSIb3DQEBCwUAMEUxCzAJBgNVBAYTAkFVMRMwEQYDVQQIDApTb21lLVN0YXRlMSEwHwYDVQQKDBhJbnRlcm5ldCBXaWRnaXRzIFB0eSBMdGQwHhcNMTgwNDE3MDkyNjA3WhcNMjAwMjEyMDkyNjA3WjBFMQswCQYDVQQGEwJBVTETMBEGA1UECAwKU29tZS1TdGF0ZTEhMB8GA1UECgwYSW50ZXJuZXQgV2lkZ2l0cyBQdHkgTHRkMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApa3aTNgdbUURevdeK+x1T1Lzaoqz4q7GNKE1FsS4Ne0paSgKav/EMI3gOZVxWEI9yW6/LXj68E/eKAxyIm3LwpYxkzsj8SBjgHACCzwCoWgr+eo71Os3+ggt1lxi5+zBdbyIS2H7feQQBWYN4XlCBNktrA6m+gos/7HG4VPJnRgsoJUmdBOs36EsoUKRnAkjiv0qctXWiR7eK8dfmfis5kXJ6c1c2Pq3x7v73+1bv6UAVywfHHxVxSFShjoY2ZezhPU9mTSo2ubptJ+oLZEzXE70qw0d+8LmUsbK/i/HnUpdzvLNixOUqcrZ5pq9I18nQr5OWt5sN5Es4IY1pt4c4QIDAQABo1AwTjAdBgNVHQ4EFgQUSoXbkjPsAPTiSMqjATZc3DzQdDAwHwYDVR0jBBgwFoAUSoXbkjPsAPTiSMqjATZc3DzQdDAwDAYDVR0TBAUwAwEB/zANBgkqhkiG9w0BAQsFAAOCAQEAciI5qncgXBxJEvfvD2Y+Qj6S5xvLQsxlBU7ViqHqpke6noPgIWAJLxYQOrgp5fq8cAJo7kVt3N2w5UWQVXbc8lDjj/bvwS/UE98jamG6YQnvh7zFNPj0XfDFFF6IUF8T8ys52LIJqPoklHHiO43pvcTYOlQ250I50i/vznyBIQQZFW883EBz9F5urdpAApqkMgBqN53+/FoLXOMtKYfBQCROZ2BEYYjZaK7W4pVOkjxuoGBAnxE+4FyUWiVBum6Mkc4ZhN6TEwvEEJlNcCXOEWMFGADkeZOZemRi09GRvnNKW/uyAOLurI1xHbOUK1v84JRob0yc2NgKcMdejbxZQA==
 
 #-----------------------------------------------------------------------------
 # Pattern Section
 #
 # patternName selects the configuration options appropriate for the
 # pattern you want to select - Options are 'webApplicationProxy' or 'none'
-patternName: webApplicationProxy
+#patternName: none
+patternName: webui
+# patternName: webApplicationProxy
 
-#none:
-# patternName "none" signifies no pattern was selected 
+
+# none:
+# patternName "none" signifies no pattern was selected
 # No config or services are set up when patternName is "none"
 
 webApplicationProxy:
@@ -46,3 +49,20 @@ webApplicationProxy:
   #
   backendURL: https://www.ibm.com
   containerPort: 8443
+
+
+#webui:
+  # The mobile pattern acts as a simple HTTPS proxy.
+  # It is based on the "Web Application Proxy" pattern available
+  #
+
+
+persistence:
+  ## persistence.enabled Enables persistent volume - PV provisioner support necessary
+  enabled: true
+  ## persistence.keep Keep persistent volume after helm delete
+  keep: false
+  ## persistence.accessMode PVC Access Mode
+  accessMode: ReadWriteOnce
+  ## persistence.size PVC Size
+  size: 50Gi

@@ -21,14 +21,14 @@ spec:
       containers:
       - name: {{ .Chart.Name }}
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-        imagePullPolicy: {{ .Values.image.pullPolicy }} 
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
         stdin: true
         tty: true
         resources:
           limits:
             cpu: {{ .Values.resources.limits.cpu }}
             memory: {{ .Values.resources.limits.memory | quote }}
-          requests: 
+          requests:
             cpu: {{ .Values.resources.requests.cpu}}
             memory: {{ .Values.resources.requests.memory | quote }}
         env:
@@ -58,16 +58,27 @@ spec:
           timeoutSeconds: 15
           periodSeconds: 10
         ports:
+          {{- if eq .Values.patternName "webApplicationProxy" }}
         - name: service
           containerPort: {{ $values.containerPort }}
+          {{- end }}
+          {{- if eq .Values.patternName "webApplicationProxy" }}
+        - name: adminconsole
+          containerPort: 9090
+          {{- end }}
         volumeMounts:
+            - mountPath: "/drouter/ramdisk2/"
+              name: {{ template "fullname"  . }}-ram-disk2
             - mountPath: "/drouter/config"
               name: {{ template "fullname" . }}-config-volume
-            - mountPath: "/drouter/secure/usrcerts"
-              name: {{ template "fullname" . }}-secret-volume
+
+
       volumes:
+        - name: {{ template "fullname" . }}-ram-disk2
+          persistentVolumeClaim:
+            claimName: {{ template "fullname" . }}
         - name: {{ template "fullname" . }}-config-volume
-          configMap: 
+          configMap:
             name: {{ template "fullname" . }}-config
             items:
             - key: {{ .Values.patternName }}.cfg
@@ -77,12 +88,4 @@ spec:
             - key: auto-startup.cfg
               path: "auto-startup.cfg"
 
-        - name: {{ template "fullname" . }}-secret-volume
-          secret:
-            secretName: {{ template "fullname" . }}-secret
-            items:
-            - key: key.pem
-              path: "{{ .Values.patternName }}/key.pem"
-            - key: cert.pem
-              path: "{{ .Values.patternName }}/cert.pem"
 {{- end }}

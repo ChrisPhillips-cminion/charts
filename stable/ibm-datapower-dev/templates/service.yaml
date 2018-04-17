@@ -11,11 +11,19 @@ metadata:
     heritage: {{ .Release.Service }}
 spec:
   type: {{ .Values.service.type }}
-  ports: 
+  ports:
+    {{- if eq  .Values.patternName "webApplicationProxy" }}
   - name: {{ .Values.patternName | lower }}-{{ .Values.service.name }}
     port: {{ $values.containerPort }}
     targetPort: {{ $values.containerPort }}
     protocol: TCP
+    {{- end }}
+    {{- if eq .Values.patternName "webui" }}
+  - name:       {{ .Values.patternName | lower }}-adminconsole
+    port:       9090
+    targetPort: 9090
+    protocol:   TCP
+        {{- end }}
   selector:
     app: {{ template "fullname" . }}
 {{- end }}
